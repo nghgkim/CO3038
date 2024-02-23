@@ -6,10 +6,10 @@ import numpy as np
 np.set_printoptions(suppress=True)
 
 # Load the model
-model = load_model("/Users/nghgkim/HCMUT/IOT/Lab2/keras_model.h5", compile=False)
+model = load_model("/Users/nghgkim/HCMUT/IOT/Lab2.1/keras_model.h5", compile=False)
 
 # Load the labels
-class_names = open("/Users/nghgkim/HCMUT/IOT/Lab2/labels.txt", "r").readlines()
+class_names = open("/Users/nghgkim/HCMUT/IOT/Lab2.1/labels.txt", "r").readlines()
 
 # CAMERA can be 0 or 1 based on default camera of your computer
 camera = cv2.VideoCapture(0)
