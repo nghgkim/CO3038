@@ -17,7 +17,6 @@ def getPort():
 ser = serial.Serial( port=getPort(), baudrate=115200)
 print(ser)
 
-mess = ""
 def processData(client, data):
     data = data.replace("!", "")
     data = data.replace("#", "")
@@ -42,3 +41,6 @@ def readSerial(client):
                 mess = ""
             else:
                 mess = mess[end+1:]
+
+def writeData(data):
+    ser.write(str(data).encode())
