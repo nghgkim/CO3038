@@ -5,14 +5,27 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10">
-
+        android:layout_weight="10"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/hcmut" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:text="IOT DEMO"
+            android:gravity="center"
+            android:textColor="#ff0000"
+            android:textSize="30dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -25,42 +38,62 @@
             android:id="@+id/txtTemperature"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="20dp"
             android:layout_weight="1"
             android:background="#ff0000"
+            android:gravity="center"
             android:text="28*C"
             android:textColor="#ffffff"
             android:textSize="50dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_margin="20dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtHumidity"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="20dp"
             android:layout_weight="1"
             android:background="#0000ff"
+            android:gravity="center"
             android:text="70%"
             android:textColor="#ffffff"
             android:textSize="50dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_margin="20dp" />
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
+    <com.github.angads25.toggle.widget.LabeledSwitch
+        android:id="@+id/btnLED"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20">
+        android:layout_weight="20"
 
-    </LinearLayout>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="30dp"
+        app:colorBorder="@color/colorAccent"
+        app:on="false"
 
-    <LinearLayout
+        app:textOff="TẮT"
+        app:textOn="BẬT" />
+
+    <com.github.angads25.toggle.widget.LabeledSwitch
+        android:id="@+id/btnPUMP"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20">
+        android:layout_weight="20"
 
-    </LinearLayout>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="30dp"
+        app:colorBorder="@color/colorAccent"
+        app:on="false"
+
+        app:textOff="TẮT"
+        app:textOn="BẬT" />
 
     <LinearLayout
         android:layout_width="match_parent"

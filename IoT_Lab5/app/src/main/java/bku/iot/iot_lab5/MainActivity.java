@@ -10,15 +10,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.github.angads25.toggle.interfaces.OnToggledListener;
+import com.github.angads25.toggle.model.ToggleableView;
+import com.github.angads25.toggle.widget.LabeledSwitch;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import java.nio.charset.Charset;
 
 public class MainActivity extends AppCompatActivity {
 
     MQTTHelper mqttHelper;
 
     TextView txtTemp, txtHumi;
+    LabeledSwitch btnLED, btnPUMP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,30 @@ public class MainActivity extends AppCompatActivity {
 
         txtTemp = findViewById(R.id.txtTemperature);
         txtHumi = findViewById(R.id.txtHumidity);
+        btnLED = findViewById(R.id.btnLED);
+        btnPUMP = findViewById(R.id.btnPUMP);
+
+        btnLED.setOnToggledListener(new OnToggledListener() {
+            @Override
+            public void onSwitched(ToggleableView toggleableView, boolean isOn) {
+                if (isOn) {
+                    sendDataMQTT("iumm0123/feeds/nutnhan1", "1");
+                } else {
+                    sendDataMQTT("iumm0123/feeds/nutnhan1", "0");
+                }
+            }
+        });
+
+        btnPUMP.setOnToggledListener(new OnToggledListener() {
+            @Override
+            public void onSwitched(ToggleableView toggleableView, boolean isOn) {
+                if (isOn) {
+                    sendDataMQTT("iumm0123/feeds/nutnhan2", "1");
+                } else {
+                    sendDataMQTT("iumm0123/feeds/nutnhan2", "0");
+                }
+            }
+        });
 
         startMQTT();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -35,6 +67,22 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void sendDataMQTT(String topic, String value){
+        MqttMessage msg = new MqttMessage();
+        msg.setId(1234);
+        msg.setQos(0);
+        msg.setRetained(false);
+
+        byte[] b = value.getBytes(Charset.forName("UTF-8"));
+        msg.setPayload(b);
+
+        try {
+            mqttHelper.mqttAndroidClient.publish(topic, msg);
+        } catch (MqttException e){
+
+        }
     }
 
     public void startMQTT() {
@@ -58,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                     txtTemp.setText(message.toString() + "°C");
                 } else if (topic.contains("cambien2")) {
                     txtHumi.setText(message.toString() + "%");
+                } else if (topic.contains("nutnhan1")) {
+                    btnLED.setOn(message.toString().equals("1"));
+                } else if (topic.contains("nutnhan2")) {
+                    btnPUMP.setOn(message.toString().equals("1"));
                 }
             }
 
